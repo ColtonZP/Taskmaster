@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  
+}
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#task {
+  width: 20%;
+  height: 100vh;
+  box-shadow: 0 0 10px 0px #000;
+  z-index: 2;
+  & ul {
+    height: 90vh;
+    overflow: scroll;
+    background: #f0f0f0;
+    & li {
+      list-style: none;
+      width: 95%;
+      margin: 2.5%;
+      border-radius: 5px;
+      background: #fff;
+      border: #000 solid 1px;
+      overflow: hidden;
+      & span, address {
+        pointer-events: none;
+      }
+      & .buttons {
+        display: flex;
+        & button {
+          width: 33.3%;
+          display: inline-block;
+          border-radius: 0%;
+          border: none;
+          border-top: #000 solid 1px;
+          transition: all .5s;
+          outline:none;
+          &:hover{
+            cursor: pointer;
+          }
+          &:last-child {
+            &:hover {
+              background: #ffb2b2;
+            }
+          }
+          &:first-child {
+            &:hover {
+              background: #b2d9ff;
+            }
+          }
+          &:nth-child(2) {
+            border: #000 solid 1px;
+            border-bottom: none;
+            &:hover {
+              background: #d2ffb2;
+            }
+          }
+        }
+      }
+    }
+  }
+  & form {
+    height: 10vh;
+    background: lightblue;
+    & #name, #address {
+      width: 100%;
+    }
+  }
+  & .planner {
+    position: absolute;
+    bottom: 0px;
+    z-index: 3;
+    width: 20%;
+    background: #fff;
+    & button {
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+#map {
+  background: #aaa;
+  height: 100vh;
+  width: 80%;
+
+  & #infowindow-content {
+    display: none;
+    display: inline;
+  }
+}
+
+.welcome {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .6);
+  z-index: 3;
+}
+
+.hidden {
+  display: none;
+}
+
+// @media screen and (min-width: 768px){
+
+// }
