@@ -116,6 +116,7 @@ function initMap() {
   const form2 = document.querySelector('.welcomeForm');
   const ul = document.querySelector('.tasks');
   const plannerButton = document.querySelector('.plannerButton');
+  const optionsIcon = document.querySelector('.optionsIcon');
 
   function createItem(tag, text) {
     const item = document.createElement(tag);
@@ -132,25 +133,35 @@ function initMap() {
     const mainDiv = createItem('div');
     const nameSpan = createItem('span', name);
     const addressTag = createItem('address', address);
-    const buttonDiv = createItem('div');
+    const optionsDiv = createItem('div');
+    const toggleButton = createItem('button', '');
+    const menuDiv = createItem('div');
     const editButton = createItem('button', 'edit');
     const completeButton = createItem('button', 'complete');
     const removeButton = createItem('button', 'remove');
 
-    buttonDiv.className = 'buttons';
+    optionsDiv.className = 'options';
 
     ul.appendChild(li);
     li.appendChild(mainDiv);
     mainDiv.appendChild(nameSpan);
     createBr(mainDiv);
     mainDiv.appendChild(addressTag);
-    mainDiv.appendChild(buttonDiv);
+    mainDiv.appendChild(optionsDiv);
+    optionsDiv.appendChild(toggleButton);
+    toggleButton.className = 'toggle';
+    const optionsIconCopy = optionsIcon.cloneNode(true);
+    optionsIconCopy.classList.remove('hidden');
+    toggleButton.appendChild(optionsIconCopy);
+    optionsDiv.appendChild(menuDiv);
+    menuDiv.className = 'menu';
+    menuDiv.classList.add('hidden');
     li.className = 'stop';
-    buttonDiv.appendChild(editButton);
-    buttonDiv.appendChild(completeButton);
-    buttonDiv.appendChild(removeButton);
+    menuDiv.appendChild(editButton);
+    menuDiv.appendChild(completeButton);
+    menuDiv.appendChild(removeButton);
     if (noButtons === true) {
-      buttonDiv.remove();
+      optionsDiv.remove();
       li.className = 'home';
     }
     if (!address) {
@@ -189,32 +200,36 @@ function initMap() {
   ul.addEventListener('click', (e) => {
     const clicked = e.target;
     const action = clicked.textContent;
-    const buttons = {
-      remove: () => {
-        ul.removeChild(clicked.parentNode.parentNode.parentNode);
-      },
-      edit: () => {
-        const span = clicked.parentNode.parentNode.firstElementChild;
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = span.textContent;
-        clicked.parentNode.parentNode.insertBefore(input, span);
-        clicked.parentNode.parentNode.removeChild(span);
-        clicked.textContent = 'save';
-      },
-      save: () => {
-        const span = document.createElement('span');
-        const input = clicked.parentNode.parentNode.firstElementChild;
-        span.textContent = input.value;
-        clicked.parentNode.parentNode.insertBefore(span, input);
-        clicked.parentNode.parentNode.removeChild(input);
-        clicked.textContent = 'edit';
-      },
-      completed: () => {
-        // eventual code
-      },
-    };
-    buttons[action]();
+    if (clicked.parentNode.parentNode.className === 'toggle') {
+      clicked.parentNode.parentNode.parentNode.querySelector('div').classList.toggle('hidden');
+    } else {
+      const buttons = {
+        remove: () => {
+          ul.removeChild(clicked.parentNode.parentNode.parentNode.parentNode);
+        },
+        edit: () => {
+          const span = clicked.parentNode.parentNode.parentNode.firstElementChild;
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = span.textContent;
+          clicked.parentNode.parentNode.parentNode.insertBefore(input, span);
+          clicked.parentNode.parentNode.parentNode.removeChild(span);
+          clicked.textContent = 'save';
+        },
+        save: () => {
+          const span = document.createElement('span');
+          const input = clicked.parentNode.parentNode.parentNode.firstElementChild;
+          span.textContent = input.value;
+          clicked.parentNode.parentNode.parentNode.insertBefore(span, input);
+          clicked.parentNode.parentNode.parentNode.removeChild(input);
+          clicked.textContent = 'edit';
+        },
+        completed: () => {
+          // eventual code
+        },
+      };
+      buttons[action]();
+    }
   });
 
   document.querySelector('.go').addEventListener('click', (e) => {
