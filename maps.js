@@ -167,11 +167,11 @@ function initMap() {
     if (name.value && !/^\s+$/.test(name.value)) {
       createLI(name.value, address);
       const liNum = document.querySelectorAll('.stop').length;
-      if (liNum < 3) {
-        plannerButton.textContent = `add ${3 - liNum} more stops to plan day`;
-      } else {
-        plannerButton.textContent = 'plan the day';
-      }
+      // if (liNum < 3) {
+      //   plannerButton.textContent = `add ${3 - liNum} more stops to plan day`;
+      // } else {
+      //   plannerButton.textContent = 'plan the day';
+      // }
     }
     name.value = '';
     document.getElementById('address').value = '';
@@ -217,9 +217,9 @@ function initMap() {
     }
   });
 
-  document.querySelector('.plannerButton').addEventListener('click', (e) => {
-    getNextStop();
-  });
+  // document.querySelector('.plannerButton').addEventListener('click', (e) => {
+  //   getNextStop();
+  // });
 
   document.querySelector('.tasks').addEventListener('mouseover', (e) => {
     if (e.target.className === 'stop') {
