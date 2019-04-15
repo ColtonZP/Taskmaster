@@ -4,13 +4,13 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="stylesheets.css">
 
 	<title></title>
 	<script src="maps.js"></script>
 	<script async defer
-	src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD7R4F6spaX7V5U0FuNRBsrE0WLg_8Mnlg&callback=initMap"></script>
+		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD7R4F6spaX7V5U0FuNRBsrE0WLg_8Mnlg&callback=initMap"></script>
 	<!-- <script src="app.js"></script> -->
 </head>
 
@@ -24,24 +24,26 @@
 			<div id="task">
 				<div class="add">
 					<form id="taskAdder">
-						<input type="text" id="name" placeholder="task name">
-						<input type="text" id="address" placeholder="address">
-						<input class="add" type="submit" value="Add">
+						<input type="text" id="name" placeholder="task name *"><br>
+						<input type="text" id="address" placeholder="address"><br>
+						<input class="add" type="submit" value="add">
 					</form>
 				</div>
 				<ul class="tasks">
 				</ul>
-				<!-- <div class="planner">
+				<div class="planner">
 					<button class="plannerButton">add 2 more stops to plan day</button>
-				</div> -->
+				</div>
 			</div>
 			<div id="map">
 			</div>
-			<div class="welcome">
-				<span>Add a starting location</span>
-				<input type="text" id="homeAddress" placeholder="Home Address">
-				<input class="go" type="submit" value="go">
-			</div>
+			<!-- <div class="welcome">
+				<form class="welcomeForm">
+					<span>Add a starting location</span><br>
+					<input type="text" id="homeAddress" placeholder="Home Address">
+					<input class="go" type="submit" value="Go">
+				</form>
+			</div> -->
 		</main>
 
 		<footer>

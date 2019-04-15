@@ -113,6 +113,7 @@ function initMap() {
   }
 
   const form = document.getElementById('taskAdder');
+  const form2 = document.querySelector('.welcomeForm');
   const ul = document.querySelector('.tasks');
   const plannerButton = document.querySelector('.plannerButton');
 
@@ -154,6 +155,10 @@ function initMap() {
     }
     if (!address) {
       li.className = 'task';
+      li.remove();
+      ul.insertBefore(li, document.querySelector('.home'));
+    } else {
+      mainDiv.className = 'hasAddress';
     }
   }
 
@@ -167,15 +172,18 @@ function initMap() {
     if (name.value && !/^\s+$/.test(name.value)) {
       createLI(name.value, address);
       const liNum = document.querySelectorAll('.stop').length;
-      // if (liNum < 3) {
-      //   plannerButton.textContent = `add ${3 - liNum} more stops to plan day`;
-      // } else {
-      //   plannerButton.textContent = 'plan the day';
-      // }
+      if (liNum < 3) {
+        plannerButton.textContent = `add ${3 - liNum} more stops to plan day`;
+      } else {
+        plannerButton.textContent = 'plan the day';
+      }
     }
     name.value = '';
     document.getElementById('address').value = '';
-    getNextStop();
+  });
+
+  form2.addEventListener('submit', (e) => {
+    e.preventDefault();
   });
 
   ul.addEventListener('click', (e) => {
@@ -213,16 +221,16 @@ function initMap() {
     const address = document.getElementById('homeAddress');
     if (address.value !== '') {
       createLI('Home Address', address.value, true);
-      e.target.parentNode.className = 'hidden';
+      e.target.parentNode.parentNode.className = 'hidden';
     }
   });
 
-  // document.querySelector('.plannerButton').addEventListener('click', (e) => {
-  //   getNextStop();
-  // });
+  document.querySelector('.plannerButton').addEventListener('click', (e) => {
+    getNextStop();
+  });
 
   document.querySelector('.tasks').addEventListener('mouseover', (e) => {
-    if (e.target.className === 'stop') {
+    if (e.target.className === 'hasAddress' && e.target.parentNode.className !== 'home') {
       const hover = e.target.querySelector('ADDRESS').textContent;
       const previousAddress = e.target.parentNode.previousSibling.querySelector('ADDRESS').textContent;
       calculateAndDisplayDirections(hover, previousAddress);
@@ -234,57 +242,25 @@ function initMap() {
     directionsDisplay.setMap(null);
   });
 
-  // function getDistance(thing1, thing2) {
-  //   return new Promise((resolve) => {
-  //     const request = {
-  //       origin: thing1,
-  //       destination: thing2,
-  //       travelMode: 'DRIVING',
-  //     };
-  //     directionsService.route(request, (result, status) => {
-  //       if (status === 'OK') {
-  //         resolve(Number(result.routes[0].legs[0].distance.text.replace(/[^\d.-]/g, '')));
-  //       }
-  //     });
-  //   });
-  // }
-
-  // function getNextStop() {
-  //   const stops = document.querySelectorAll('.stop');
-  //   const lis = document.querySelectorAll('li');
-  //   for (let stopsIndex = 1; stopsIndex < lis.length; stopsIndex++) {
-  //     const distances = [];
-  //     for (let i = stopsIndex; i < lis.length; i++) {
-  //       getDistance(lis[stopsIndex - 1].children[0].children[2].innerText,
-  //         lis[i].children[0].children[2].innerText)
-  //         .then((response) => {
-  //           distances.push(response);
-  //           console.log(stopsIndex, distances.length, lis.length - 1);
-  //           if (i === lis.length - 1) {
-  //             const lowest = distances.indexOf(Math.min(...distances));
-  //             ul.insertBefore(stops[lowest], lis[stopsIndex - 1].nextSibling);
-  //           }
-  //         });
-  //     }
-  //   }
-  // }
-
-  function getDistance(thing1, thing2) {
-    return new Promise((resolve) => {
+  function getDistance(address1, address2) {
+    return new Promise((resolve, reject) => {
       const request = {
-        origin: thing1,
-        destination: thing2,
+        origin: address1,
+        destination: address2,
         travelMode: 'DRIVING',
       };
       directionsService.route(request, (result, status) => {
         if (status === 'OK') {
           resolve(Number(result.routes[0].legs[0].distance.text.replace(/[^\d.-]/g, '')));
+        } else {
+          reject(result, status); // add error messaging
         }
       });
     });
   }
 
   async function getNextStop() {
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
     const lis = document.querySelectorAll('.stop');
     const stops = Array.prototype.slice.call(lis);
     const stopItems = Array.prototype.slice.call(lis);
@@ -296,38 +272,13 @@ function initMap() {
       for (let i = 0; i < stopItems.length; i++) {
         let lastLi = document.querySelectorAll('li');
         lastLi = lastLi[lastLi.length - 1];
-        const newDis = await getDistance(lastLi.querySelector('address').innerText,
-          stopItems[i].querySelector('address').innerText)
-          .then(response => response);
+        await delay(500);
+        const newDis = await getDistance(lastLi.querySelector('address').innerText, stopItems[i].querySelector('address').innerText);
         distances.push(newDis);
       }
       const lowest = distances.indexOf(Math.min(...distances));
       ul.appendChild(stopItems[lowest]);
       stopItems.splice(lowest, 1);
-      console.log(stopsIndex, stops.length, stops, stopItems);
     }
   }
 }
-
-// let stop = document.querySelector('.stop').parentNode; // move item up
-// stop.parentNode.insertBefore(stop, stop.previousElementSibling);
-
-// async function getNextStop() {
-//   const lis = document.querySelectorAll('li');
-//   for (let stopsIndex = 1; stopsIndex < lis.length; stopsIndex++) {
-//     const stops = document.querySelectorAll('.stop');
-//     const distances = [];
-//     for (let i = stopsIndex; i < lis.length; i++) {
-//       const newDis = await getDistance(lis[stopsIndex - 1].children[0].children[2].innerText,
-//         lis[i].children[0].children[2].innerText)
-//         .then(response => response);
-//       distances.push(newDis);
-//     }
-//     console.log(distances);
-//     const lowest = distances.indexOf(Math.min(...distances));
-//     console.log(lowest);
-//     console.log(stopsIndex);
-//     console.log(`moving ${stops[lowest].children[0].children[2].innerText} after ${lis[stopsIndex - 1].nextSibling.children[0].children[2].innerText}`);
-//     ul.insertBefore(stops[lowest], lis[stopsIndex - 1].nextSibling);
-//   }
-// }

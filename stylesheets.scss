@@ -1,8 +1,12 @@
+$mainBackground: #f0f0f0;
+$mainButtonColor: #0c9;
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 1em;
 }
 
 main {
@@ -13,20 +17,21 @@ main {
 #task {
   width: 20%;
   height: 100vh;
-  box-shadow: 0 0 10px 0px #000;
+  box-shadow: 0 0 10px 0px black;
   z-index: 2;
+  background: $mainBackground;
   & ul {
-    height: 90vh;
+    height: calc(100vh - 171px);
     overflow: scroll;
-    background: #f0f0f0;
     & li {
       list-style: none;
-      width: 95%;
-      margin: 2.5%;
-      border-radius: 5px;
-      background: #fff;
-      border: #000 solid 1px;
+      width: 100%;
+      padding-left: 5px;
+      border-bottom: black solid 1px;
       overflow: hidden;
+      &:nth-child(odd) {
+        background: white;
+      }
       & span, address {
         pointer-events: none;
       }
@@ -64,11 +69,24 @@ main {
       }
     }
   }
-  & form {
-    height: 10vh;
-    background: lightblue;
+  & #taskAdder {
     & #name, #address {
-      width: 100%;
+      width: 95%;
+      border-radius: 5px;
+      border: 1px black solid;
+      padding: 5px;
+      margin: 5px 2.5%;
+    }
+    & .add {
+      color: white;
+      background-color: $mainButtonColor;
+      margin: 5px 10%;
+      width: 80%;
+      padding: 10px;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
     }
   }
   & .planner {
@@ -76,11 +94,22 @@ main {
     bottom: 0px;
     z-index: 3;
     width: 20%;
-    background: #fff;
     & button {
-      font-variant-numeric: tabular-nums;
+      margin: 0 10% 5px;
+      width: 80%;
     }
   }
+}
+
+.planner button, .go {
+  background-color: $mainButtonColor;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-variant-numeric: tabular-nums;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 #map {
@@ -95,11 +124,30 @@ main {
 }
 
 .welcome {
+  * {
+    font-size: 1.2em;
+  }
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, .6);
+  background: white;
   z-index: 3;
+  & .welcomeForm {
+    margin: 10vh 0 0 25.5vw;
+    & .go {
+      padding: 10px;
+      width: 10vw;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+      margin-left: 1vw;
+    }
+    & #homeAddress {
+      margin: 3vh 0;
+      width: 40vw;
+      border-radius: 5px;
+      border: 1px black solid;
+      padding: 10px;
+    }
+  }
 }
 
 .hidden {
