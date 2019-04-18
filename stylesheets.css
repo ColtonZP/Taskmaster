@@ -15,6 +15,10 @@ main {
       flex-wrap: nowrap;
 }
 
+input:focus {
+  outline: none;
+}
+
 #task {
   width: 20%;
   height: 100vh;
@@ -32,8 +36,7 @@ main {
 #task ul li {
   list-style: none;
   width: 100%;
-  padding-left: 5px;
-  border-bottom: black solid 1px;
+  padding: 10px 0 10px 10px;
   position: relative;
 }
 
@@ -112,7 +115,7 @@ main {
 }
 
 .welcome .welcomeForm {
-  margin: 10vh 0 0 25.5vw;
+  margin: 5vh 0 0 25.5vw;
 }
 
 .welcome .welcomeForm .go {
@@ -124,37 +127,43 @@ main {
 }
 
 .welcome .welcomeForm #homeAddress {
-  margin: 3vh 0;
+  margin: 2vh 0;
   width: 40vw;
   border-radius: 5px;
   border: 1px black solid;
   padding: 10px;
 }
 
+.welcome img {
+  margin-top: 2vh;
+  max-height: 20vh;
+}
+
+.welcome p {
+  text-align: center;
+}
+
 .options {
   position: absolute;
-  right: 5px;
-  top: 0%;
+  right: 10px;
+  top: 10px;
 }
 
 .options .toggle {
-  text-align: top;
+  width: 16px;
+  height: 16px;
   position: relative;
   border: none;
-  background: transparent;
+  background-color: gray;
+  -webkit-mask: url(imgs/menu.svg) no-repeat center/cover;
+          mask: url(imgs/menu.svg) no-repeat center/cover;
+  -webkit-transition: all .5s;
+  transition: all .5s;
 }
 
-.options .toggle svg {
-  fill: grey;
-}
-
-.options .toggle svg:hover {
-  fill: black;
+.options .toggle:hover {
+  background-color: black;
   cursor: pointer;
-}
-
-.options .hidden {
-  display: none;
 }
 
 .menu {
@@ -163,9 +172,11 @@ main {
   position: absolute;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: 3;
 }
 
 .menu * {
+  display: block;
   background: none;
   width: 100%;
   text-align: right;
@@ -173,6 +184,36 @@ main {
   padding: 5px 5px 5px 20px;
   color: white;
   cursor: pointer;
+}
+
+.menu *:hover {
+  color: #0c9;
+}
+
+.errReport {
+  position: absolute;
+  top: -36px;
+  width: 40vw;
+  left: 30vw;
+  background: #ff3d46;
+  padding: 6px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.errReport button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  float: right;
+}
+
+.errReport span {
+  display: inline-block;
+  width: calc(100% - 12px);
 }
 
 .hidden {

@@ -8,14 +8,12 @@
 	<link rel="stylesheet" href="stylesheets.css">
 
 	<title></title>
-	<script src="maps.js"></script>
+	<script src="app.js"></script>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD7R4F6spaX7V5U0FuNRBsrE0WLg_8Mnlg&callback=initMap"></script>
-	<!-- <script src="app.js"></script> -->
+		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA1kT8ktpC0-4_UWrjXgnGa2Q4snqjddSE&callback=initMap"></script>
 </head>
 
 <body>
-		<svg class="optionsIcon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/></svg>
 	<div>
 
 		<header>
@@ -25,7 +23,7 @@
 			<div id="task">
 				<div class="add">
 					<form id="taskAdder">
-						<input type="text" id="name" placeholder="task name *"><br>
+						<input type="text" id="name" placeholder="task name"><br>
 						<input type="text" id="address" placeholder="address"><br>
 						<input class="add" type="submit" value="add">
 					</form>
@@ -39,12 +37,19 @@
 			<div id="map">
 			</div>
 			<div class="welcome">
+				<img src="imgs/taskmaster.svg" alt="">
 				<form class="welcomeForm">
 					<span>Add a starting location</span><br>
 					<input type="text" id="homeAddress" placeholder="Home Address">
 					<input class="go" type="submit" value="Go">
 				</form>
+				<p>A web app made by Colton Pemberton</p>
 			</div>
+			<div class="errReport"><span></span> <button><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+						viewBox="0 0 24 24" fill="#FFF">
+						<path
+							d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z" />
+						</svg></button></div>
 		</main>
 
 		<footer>
